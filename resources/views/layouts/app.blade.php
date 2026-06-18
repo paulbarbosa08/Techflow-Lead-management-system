@@ -386,37 +386,26 @@
     z-index: 100;
 }
 
-        .navbar::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--primary-yellow), transparent);
-        }
+.navbar::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary-yellow), transparent);
+}
 
-        .navbar-brand {
-            font-size: 24px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            color: var(--primary-yellow);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            white-space: nowrap;
-        }
+.navbar-brand {
+    font-size: 24px;
+    ...
+}
 
-        .navbar-brand::before {
-            content: '✦';
-            font-size: 20px;
-        }
+.navbar-brand::before {
+    content: '✦';
+    font-size: 20px;
+}
 
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
 
         .user-profile {
             display: flex;
@@ -470,18 +459,90 @@
 
         /* Professional Sidebar */
         .sidebar {
-            width: 280px;
-            background: var(--secondary-dark);
-            position: fixed;
-            left: 0;
-            top: 80px;
-            bottom: 0;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid rgba(249, 185, 51, 0.1);
-            overflow: hidden;
-            transition: var(--transition);
-        }
+    width: 280px;
+    background: var(--secondary-dark);
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(249, 185, 51, 0.1);
+    overflow: hidden;
+    transition: var(--transition);
+    z-index: 100;
+}
+
+.sidebar-brand {
+    padding: 28px 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(249, 185, 51, 0.1);
+}
+
+.sidebar-brand-icon {
+    color: var(--primary-yellow);
+    font-size: 22px;
+}
+
+.sidebar-brand-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-brand-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary-yellow);
+    letter-spacing: -0.3px;
+}
+
+.sidebar-brand-subtitle {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.sidebar-profile {
+    padding: 16px 20px;
+    margin: 16px 16px 0;
+    background: rgba(249, 185, 51, 0.08);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sidebar-profile-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--primary-yellow);
+    color: var(--primary-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+}
+
+.sidebar-profile-name {
+    color: var(--text-light);
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.sidebar-profile-role {
+    color: var(--primary-yellow);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
 
         .sidebar-menu {
             list-style: none;
@@ -589,12 +650,12 @@
         }
 
         .main-content {
-            margin-left: 280px;
-            padding: 40px;
-            min-height: calc(100vh - 80px);
-            background: var(--primary-dark);
-            transition: var(--transition);
-        }
+    margin-left: 280px;
+    padding: 40px;
+    min-height: 100vh;
+    background: var(--primary-dark);
+    transition: var(--transition);
+}
 
         /* ========== IMPROVED DASHBOARD CARDS ========== */
         .page-header {
@@ -688,6 +749,119 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+
+        .welcome-banner {
+    background: linear-gradient(135deg, var(--primary-yellow), var(--yellow-hover));
+    border-radius: 16px;
+    padding: 24px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.welcome-banner-text h2 {
+    color: var(--primary-dark);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.welcome-banner-text p {
+    color: rgba(26, 26, 26, 0.7);
+    font-size: 13px;
+    margin: 0;
+}
+
+.welcome-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--primary-dark);
+    color: var(--primary-yellow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.mini-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.mini-stat-card {
+    background: var(--secondary-dark);
+    border-radius: 10px;
+    padding: 16px;
+    border: 1px solid rgba(249, 185, 51, 0.2);
+    border-left: 3px solid var(--primary-yellow);
+}
+
+.mini-stat-card .mini-stat-number {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-light);
+    margin: 10px 0 2px;
+}
+
+.mini-stat-card .mini-stat-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 16px;
+}
+
+@media (max-width: 900px) {
+    .dashboard-grid { grid-template-columns: 1fr; }
+}
+
+.activity-feed-card {
+    background: var(--secondary-dark);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid rgba(249, 185, 51, 0.1);
+}
+
+.activity-feed-title {
+    color: var(--text-light);
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.activity-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 14px;
+}
+
+.activity-item:last-child {
+    margin-bottom: 0;
+}
+
+.activity-item-text p {
+    margin: 0;
+    color: var(--text-light);
+    font-size: 13px;
+}
+
+.activity-item-time {
+    color: var(--text-muted);
+    font-size: 11px;
+}
+
 
         .stat-trend {
             display: flex;
@@ -1313,35 +1487,388 @@
     color: #EF4444;
 }
 
+.landing-nav {
+    background: var(--secondary-dark);
+    padding: 20px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(249, 185, 51, 0.1);
+}
+
+.landing-nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.landing-nav-brand i {
+    color: var(--primary-yellow);
+    font-size: 22px;
+}
+
+.landing-nav-brand-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.landing-nav-brand-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary-yellow);
+    letter-spacing: -0.3px;
+}
+
+.landing-nav-brand-subtitle {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.landing-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.landing-nav-link {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: var(--transition);
+}
+
+.landing-nav-link:hover {
+    color: var(--primary-yellow);
+}
+
+.landing-nav-btn {
+    background: var(--primary-yellow);
+    color: var(--primary-dark);
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 13px;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: var(--transition);
+}
+
+.landing-nav-btn:hover {
+    background: var(--yellow-hover);
+}
+
+.landing-hero {
+    position: relative;
+    padding: 100px 48px 80px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.landing-hero::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    background-image: url('/images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: blur(6px) brightness(0.4);
+    z-index: 0;
+}
+
+.landing-hero > * {
+    position: relative;
+    z-index: 1;
+}
+
+.landing-hero h1 {
+    font-size: 48px;
+    color: var(--text-light);
+    font-weight: 700;
+    max-width: 800px;
+    margin: 0 auto 24px;
+    line-height: 1.2;
+}
+
+.landing-hero h1 span {
+    color: var(--primary-yellow);
+}
+
+.landing-hero p {
+    color: var(--text-muted);
+    font-size: 18px;
+    max-width: 600px;
+    margin: 0 auto 36px;
+    line-height: 1.6;
+}
+
+.landing-hero-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+}
+
+.landing-btn-primary {
+    background: var(--primary-yellow);
+    color: var(--primary-dark);
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.landing-btn-primary:hover {
+    background: var(--yellow-hover);
+    transform: translateY(-2px);
+}
+
+.landing-btn-secondary {
+    background: transparent;
+    color: var(--text-light);
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    border: 1px solid rgba(249, 185, 51, 0.3);
+    transition: var(--transition);
+}
+
+.landing-btn-secondary:hover {
+    border-color: var(--primary-yellow);
+    color: var(--primary-yellow);
+}
+
+.landing-section {
+    position: relative;
+    padding: 80px 48px;
+    overflow: hidden;
+}
+
+.landing-section::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    background-image: url('/images/features-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: blur(6px) brightness(0.35);
+    z-index: 0;
+}
+
+.landing-section > * {
+    position: relative;
+    z-index: 1;
+}
+
+.landing-section-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 56px;
+}
+
+.landing-section-header h2 {
+    font-size: 32px;
+    color: var(--text-light);
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.landing-section-header p {
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.landing-features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.landing-feature-card {
+    background: var(--primary-dark);
+    border: 1px solid rgba(249, 185, 51, 0.15);
+    border-radius: 14px;
+    padding: 28px;
+    transition: var(--transition);
+}
+
+.landing-feature-card:hover {
+    border-color: rgba(249, 185, 51, 0.4);
+    transform: translateY(-4px);
+}
+
+.landing-feature-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(249, 185, 51, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.landing-feature-icon i {
+    color: var(--primary-yellow);
+    width: 22px;
+    height: 22px;
+}
+
+.landing-feature-card h3 {
+    color: var(--text-light);
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.landing-feature-card p {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.landing-about-wrapper {
+    position: relative;
+    padding: 80px 48px;
+    overflow: hidden;
+}
+
+.landing-about-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    background-image: url('/images/about-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: blur(6px) brightness(0.4);
+    z-index: 0;
+}
+
+.landing-about {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.landing-about::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    background-image: url('/images/about-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: blur(6px) brightness(0.4);
+    z-index: 0;
+}
+
+.landing-about > * {
+    position: relative;
+    z-index: 1;
+}
+
+.landing-about h2 {
+    font-size: 32px;
+    color: var(--text-light);
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.landing-about p {
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.landing-cta {
+    background: linear-gradient(135deg, var(--primary-yellow), var(--yellow-hover));
+    padding: 64px 48px;
+    text-align: center;
+}
+
+.landing-cta h2 {
+    font-size: 28px;
+    color: var(--primary-dark);
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.landing-cta p {
+    color: rgba(26, 26, 26, 0.7);
+    font-size: 15px;
+    margin-bottom: 28px;
+}
+
+.landing-footer {
+    background: var(--secondary-dark);
+    padding: 32px 48px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    border-top: 1px solid rgba(249, 185, 51, 0.1);
+}
+
+@media (max-width: 768px) {
+    .landing-nav { padding: 16px 24px; }
+    .landing-nav-link { display: none; }
+    .landing-hero { padding: 60px 24px; }
+    .landing-hero h1 { font-size: 32px; }
+    .landing-section { padding: 56px 24px; }
+    .landing-about { padding: 56px 24px; }
+}
+
     </style>
 </head>
 <body>
-    @if(Request::is('/') || Request::is('login') || Request::is('register') || Request::is('forgot-password') || Request::is('reset-password*'))
-        @yield('auth-content')
-    @else
+    @if(Request::is('/'))
+    @yield('landing-content')
+@elseif(Request::is('login') || Request::is('register') || Request::is('forgot-password') || Request::is('reset-password*'))
+    @yield('auth-content')
+@else
         <div class="app-layout">
-            <nav class="navbar">
-                <!-- ✅ TECHFLOW BRAND (SAFE) -->
-                <div class="navbar-brand">
-                    <span class="brand-name">TECHFLOW</span>
-                    <span class="brand-subtitle">Lead Management System</span>
-                </div>
+    <div class="sidebar" id="sidebar">
 
-                <div class="user-info">
-                    <div class="user-profile clickable">
-                        <div class="user-avatar">
-                            {{ strtoupper(substr(Auth::user()->first_name, 0, 1)) }}{{ strtoupper(substr(Auth::user()->last_name, 0, 1)) }}
-                        </div>
-                        <div class="user-details">
-                            <span class="user-name">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</span>
-                        </div>
-                        <span class="user-role">{{ strtoupper(Auth::user()->role) }}</span>
-                    </div>
-                </div>
-            </nav>
+        <div class="sidebar-brand">
+            <i data-lucide="sparkles" class="sidebar-brand-icon"></i>
+            <div class="sidebar-brand-text">
+                <span class="sidebar-brand-name">TECHFLOW</span>
+                <span class="sidebar-brand-subtitle">Lead Management</span>
+            </div>
+        </div>
 
-            <div class="sidebar" id="sidebar">
-                <ul class="sidebar-menu">
+        <div class="sidebar-profile">
+            <div class="sidebar-profile-avatar">
+                {{ strtoupper(substr(Auth::user()->first_name, 0, 1)) }}{{ strtoupper(substr(Auth::user()->last_name, 0, 1)) }}
+            </div>
+            <div>
+                <div class="sidebar-profile-name">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</div>
+                <div class="sidebar-profile-role">{{ strtoupper(Auth::user()->role) }}</div>
+            </div>
+        </div>
+
+        <ul class="sidebar-menu">
                     <li>
                         <a href="{{ route('dashboard') }}" class="{{ Request::is('dashboard') ? 'active' : '' }}">
                             <i data-lucide="layout-dashboard" class="icon"></i>
@@ -1357,6 +1884,11 @@
                             <span>Leads (All)</span>
                         </a>
                     </li>
+
+                    <a href="{{ route('leaderboard') }}" class="nav-link {{ request()->routeIs('leaderboard') ? 'active' : '' }}">
+    <i data-lucide="trophy" class="icon"></i>
+    Leaderboard
+</a>
                     @endif
 
                     @if(auth()->user()->role === 'admin')

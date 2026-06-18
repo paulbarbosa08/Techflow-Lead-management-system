@@ -6,6 +6,44 @@
     <p>System overview and statistics</p>
 </div>
 
+@if($staleLeads->count() > 0)
+<div class="card" style="border-color: rgba(239, 68, 68, 0.4); background: rgba(239, 68, 68, 0.05); margin-bottom: 24px;">
+    <div class="card-header">
+        <h2 style="color: #EF4444;">⚠️ Stale Leads Need Attention</h2>
+        <p>{{ $staleLeads->count() }} lead(s) have been inactive for 3+ days</p>
+    </div>
+
+    <div class="table-wrapper">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Company</th>
+                <th>Status</th>
+                <th>Assigned To</th>
+                <th>Days Inactive</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($staleLeads as $lead)
+            <tr>
+                <td>{{ $lead->name }}</td>
+                <td>{{ $lead->company }}</td>
+                <td>
+                    <span class="status-badge status-{{ $lead->status }}">
+                        {{ ucfirst($lead->status) }}
+                    </span>
+                </td>
+                <td>{{ $lead->assignedTo ? $lead->assignedTo->first_name . ' ' . $lead->assignedTo->last_name : 'Unassigned' }}</td>
+                <td style="color: #EF4444; font-weight: 600;">{{ $lead->daysSinceUpdate() }} days</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+    </div>
+</div>
+@endif
+
 <div class="stats-grid">
     <div class="stat-card">
         <h3>TOTAL LEADS</h3>

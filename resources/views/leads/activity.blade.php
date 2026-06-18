@@ -33,7 +33,17 @@
 </div>
 
 <div style="padding: 24px; border-top: 1px solid rgba(255,255,255,0.08);">
-    <h2 style="color: var(--text-light); margin-bottom: 16px;">Notes</h2>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h2 style="color: var(--text-light); margin: 0;">Notes</h2>
+        <button id="summarize-btn" class="btn btn-primary" data-id="{{ $lead->id }}">
+            ✨ AI Summary
+        </button>
+    </div>
+
+    <div id="summary-box" style="display: none; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 10px; padding: 16px; margin-bottom: 20px;">
+        <p style="color: #3B82F6; font-weight: 600; margin-bottom: 8px; font-size: 13px; text-transform: uppercase;">AI Summary</p>
+        <p id="summary-text" style="color: var(--text-light); margin: 0;"></p>
+    </div>
 
     <form method="POST" action="{{ route('leads.notes.add', $lead->id) }}" style="margin-bottom: 24px;">
         @csrf
@@ -56,4 +66,41 @@
         <p style="color: var(--text-muted);">No notes yet.</p>
     @endforelse
 </div>
+
+<script>
+    document.getElementById('summarize-btn').addEventListener('click', function() {
+        const leadId = this.getAttribute('data-id');
+        const btn = this;
+        const box = document.getElementById('summary-box');
+        const text = document.getElementById('summary-text');
+
+        btn.disabled = true;
+        btn.textContent = 'Generating...';
+
+        fetch(`/leads/${leadId}/summarize`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            btn.disabled = false;
+            btn.textContent = '✨ AI Summary';
+
+            if (data.summary) {
+                text.textContent = data.summary;
+                box.style.display = 'block';
+            } else {
+                alert(data.error || 'Something went wrong.');
+            }
+        })
+        .catch(() => {
+            btn.disabled = false;
+            btn.textContent = '✨ AI Summary';
+            alert('Failed to connect. Please try again.');
+        });
+    });
+</script>
 @endsection

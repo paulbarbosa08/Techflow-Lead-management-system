@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\leadNote;
 use App\Models\LeadActivity;
 use App\Mail\LeadAssignedMail;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
@@ -296,6 +297,87 @@ public function addNote(Request $request, $id)
     ]);
 
     return redirect()->back()->with('success', 'Note added successfully!');
+}
+
+// Summarize all notes for a lead using Groq AI
+public function summarizeNotes($id)
+{
+    $lead = Lead::with('leadNotes')->findOrFail($id);
+
+    // Only admin or the assigned staff can summarize
+    if (auth()->user()->role !== 'admin' && $lead->assigned_to !== auth()->id()) {
+        return response()->json(['error' => 'Unauthorized access.'], 403);
+    }
+
+    if ($lead->leadNotes->isEmpty()) {
+        return response()->json(['error' => 'No notes available to summarize.'], 400);
+    }
+
+    // Build the notes text block
+    $notesText = $lead->leadNotes->map(function ($note) {
+        return '- (' . $note->created_at->format('M d, Y') . ') ' . $note->note;
+    })->implode("\n");
+
+    $prompt = "Summarize the following lead notes into a short, professional paragraph (3-4 sentences max) for a sales dashboard. Focus on what's happened so far and what the next step should be.\n\nLead: {$lead->name} from {$lead->company}\n\nNotes:\n{$notesText}";
+
+    $apiKey = config('services.groq.api_key');
+
+    $response = Http::withHeaders([
+        'Authorization' => 'Bearer ' . $apiKey,
+        'Content-Type' => 'application/json',
+    ])->post('https://api.groq.com/openai/v1/chat/completions', [
+        'model' => 'llama-3.3-70b-versatile',
+        'messages' => [
+            ['role' => 'user', 'content' => $prompt]
+        ],
+        'max_tokens' => 200,
+    ]);
+
+    if ($response->failed()) {
+        \Log::error('Groq API failed', [
+            'status' => $response->status(),
+            'body' => $response->body(),
+        ]);
+        return response()->json(['error' => 'Failed to generate summary: ' . $response->status() . ' - ' . $response->body()], 500);
+    }
+
+    $data = $response->json();
+    $summary = $data['choices'][0]['message']['content'] ?? 'Unable to generate summary.';
+
+    return response()->json(['summary' => trim($summary)]);
+}
+
+// Check if a lead with the same email or phone already exists
+public function checkDuplicate(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+        'phone' => 'required|string',
+    ]);
+
+    $existing = Lead::with('assignedTo')
+        ->where(function ($q) use ($request) {
+            $q->where('email', $request->email)
+              ->orWhere('phone', $request->phone);
+        })
+        ->first();
+
+    if ($existing) {
+        return response()->json([
+            'duplicate' => true,
+            'lead' => [
+                'name' => $existing->name,
+                'company' => $existing->company,
+                'status' => ucfirst($existing->status),
+                'assigned_to' => $existing->assignedTo 
+                    ? $existing->assignedTo->first_name . ' ' . $existing->assignedTo->last_name 
+                    : 'Unassigned',
+                'created_at' => $existing->created_at->format('M d, Y'),
+            ]
+        ]);
+    }
+
+    return response()->json(['duplicate' => false]);
 }
 
 }

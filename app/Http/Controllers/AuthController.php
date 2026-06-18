@@ -16,68 +16,32 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => 'required|email',
+        $request->validate([
+            'email'    => 'required|email',
             'password' => 'required',
-            'role' => 'required|in:admin,staff'
+            'role'     => 'required|in:admin,staff'
         ]);
 
         $user = User::where('email', $request->email)->first();
-        
+
         if (!$user) {
-            return back()->withErrors([
-                'email' => 'The provided credentials do not match our records.',
-            ]);
+            return back()->withErrors(['email' => 'The provided credentials do not match our records.']);
         }
 
         if (!$user->is_active) {
-    return back()->withErrors([
-        'email' => 'This account has been deactivated. Please contact your administrator.',
-    ]);
-}
-
-        if ($user->role != $request->role) {
-            return back()->withErrors([
-                'email' => 'Please select the correct role (' . ucfirst($user->role) . ') for this account.',
-            ]);
+            return back()->withErrors(['email' => 'This account has been deactivated. Please contact your administrator.']);
         }
 
-        if (Auth::attempt($credentials)) {
+        if ($user->role !== $request->role) {
+            return back()->withErrors(['email' => 'Please select the correct role (' . ucfirst($user->role) . ') for this account.']);
+        }
+
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $request->session()->regenerate();
             return redirect()->intended('/dashboard');
         }
 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
-    }
-
-    public function showRegister()
-    {
-        return view('auth.register');
-    }
-
-    public function register(Request $request)
-    {
-        $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'role' => 'required|in:admin,staff'
-        ]);
-
-        $user = User::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => $request->role
-        ]);
-
-        Auth::login($user);
-
-        return redirect('/dashboard');
+        return back()->withErrors(['email' => 'The provided credentials do not match our records.']);
     }
 
     public function logout(Request $request)
