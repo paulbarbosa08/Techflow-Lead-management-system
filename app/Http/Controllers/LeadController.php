@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Lead;
 use App\Models\User;
-use App\Models\leadNote;
+use App\Models\LeadNote;
 use App\Models\LeadActivity;
 use App\Mail\LeadAssignedMail;
 use Illuminate\Support\Facades\Http;
