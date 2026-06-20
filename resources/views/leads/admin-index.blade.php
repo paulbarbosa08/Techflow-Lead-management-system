@@ -43,6 +43,9 @@
     <a href="{{ route('leads.export', request()->query()) }}" class="btn btn-primary" style="margin: 0 24px 16px;">
     📥 Export to CSV
 </a>
+<a href="{{ route('leads.import') }}" class="btn btn-secondary" style="margin: 0 24px 16px;">
+    📤 Import CSV
+</a>
 
     <!-- ✅ WRAP TABLE so it fits at 100% zoom -->
     <div class="table-wrapper">

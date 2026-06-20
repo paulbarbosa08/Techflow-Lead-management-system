@@ -63,6 +63,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/leads',                  [LeadController::class, 'store'])->name('leads.store');
     Route::get('/leads',                   [LeadController::class, 'adminIndex'])->name('leads.index');
     Route::get('/leads/export',            [LeadController::class, 'exportCsv'])->name('leads.export');
+    Route::get('/leads/import',            [LeadController::class, 'showImport'])->name('leads.import');
+    Route::get('/leads/import/template',   [LeadController::class, 'downloadTemplate'])->name('leads.import.template');
+    Route::post('/leads/import/preview',   [LeadController::class, 'importPreview'])->name('leads.import.preview');
+    Route::post('/leads/import/confirm',   [LeadController::class, 'importConfirm'])->name('leads.import.confirm');
     Route::delete('/leads/{lead}',         [LeadController::class, 'destroy'])->name('leads.destroy');
     Route::post('/leads/{lead}/assign',    [LeadController::class, 'assign'])->name('leads.assign');
     Route::get('/leads/{lead}/activity',   [LeadController::class, 'activity'])->name('leads.activity');
