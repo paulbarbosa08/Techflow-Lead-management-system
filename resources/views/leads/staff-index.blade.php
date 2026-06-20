@@ -24,7 +24,7 @@
                 <th>Status</th>
                 <th>Priority</th>
                 <th>Date</th>
-                <th>Notes</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -47,8 +47,11 @@
                 </td>
                 <td>{{ $lead->date->format('m-d-Y') }}</td>
                 <td>
-                    <a href="{{ route('leads.activity', $lead->id) }}" class="btn" style="background: #3B82F6; color: white; padding: 5px 10px; font-size: 12px;">
+                    <a href="{{ route('leads.activity', $lead->id) }}" class="btn" style="background: #3B82F6; color: white; padding: 5px 10px; font-size: 12px; display: inline-block; margin-bottom: 4px;">
                         📝 View
+                    </a>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ urlencode($lead->email) }}&su={{ urlencode('Regarding your inquiry — ' . ($lead->product ?? 'our services')) }}" target="_blank" rel="noopener" class="btn" style="background: #EA4335; color: white; padding: 5px 10px; font-size: 12px; display: inline-block;">
+                        ✉️ Email
                     </a>
                 </td>
             </tr>

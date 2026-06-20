@@ -193,7 +193,7 @@ return response()->json(['success' => 'Lead assigned successfully.']);
         }
         
         $request->validate([
-            'status' => 'required|in:new,contacted,accepted,denied'
+            'status' => 'required|in:contacted,accepted,denied'
 
         ]);
         

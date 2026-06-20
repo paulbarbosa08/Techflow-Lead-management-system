@@ -38,7 +38,9 @@
                 <td>{{ $lead->product ?? '-' }}</td>
                 <td>
                     <select class="form-control status-select" data-id="{{ $lead->id }}">
-                        <option value="new" {{ $lead->status == 'new' ? 'selected' : '' }}>New</option>
+                        @if($lead->status == 'new')
+                            <option value="new" selected disabled>New (not yet contacted)</option>
+                        @endif
                         <option value="contacted" {{ $lead->status == 'contacted' ? 'selected' : '' }}>Contacted</option>
                         <option value="accepted" {{ $lead->status == 'accepted' ? 'selected' : '' }}>Accepted</option>
                         <option value="denied" {{ $lead->status == 'denied' ? 'selected' : '' }}>Denied</option>
@@ -56,8 +58,11 @@
                     </button>
                 </td>
                 <td>
-                    <a href="{{ route('leads.activity', $lead->id) }}" class="btn" style="background: #3B82F6; color: white; padding: 5px 10px; font-size: 12px;">
+                    <a href="{{ route('leads.activity', $lead->id) }}" class="btn" style="background: #3B82F6; color: white; padding: 5px 10px; font-size: 12px; display: inline-block; margin-bottom: 4px;">
                         📝 View
+                    </a>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ urlencode($lead->email) }}&su={{ urlencode('Regarding your inquiry — ' . ($lead->product ?? 'our services')) }}" target="_blank" rel="noopener" class="btn" style="background: #EA4335; color: white; padding: 5px 10px; font-size: 12px; display: inline-block;">
+                        ✉️ Email
                     </a>
                 </td>
             </tr>

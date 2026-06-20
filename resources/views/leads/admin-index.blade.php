@@ -59,7 +59,6 @@
                     <th style="width: 140px;">Phone</th>
                     <th style="width: 160px;">Product</th>
                     <th style="width: 130px;">Status</th>
-                    <th style="width: 110px;">Status</th>
                     <th style="width: 100px;">Priority</th>
                     <th style="width: 170px;">Assigned To</th>
                     <th style="width: 120px;">Date</th>
